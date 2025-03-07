@@ -1,61 +1,71 @@
-// 4. Image Slider
-(function imageSlider() {
-    let currentSlide = 0;
+// video-slider.js
+async function loadVideoSlider() {
+    try {
+        const response = await fetch('/slider-data.json');
+        const sliderData = await response.json();
+        const slidesContainer = document.getElementById('videoSlides');
+        slidesContainer.innerHTML = '';
+
+        sliderData.forEach((slide, index) => {
+            const slideElement = document.createElement('a');
+            slideElement.href = slide.linkUrl;
+            slideElement.target = '_blank';
+            slideElement.className = 'slide';
+            if (index === 0) slideElement.classList.add('active');
+            slideElement.innerHTML = `
+                <img src="${slide.imageUrl}" alt="${slide.caption}">
+                <div class="caption">${slide.caption}</div>
+            `;
+            slidesContainer.appendChild(slideElement);
+        });
+
+        initializeSlider();
+    } catch (error) {
+        console.error('Error loading slider data:', error);
+    }
+}
+
+function initializeSlider() {
+    let currentIndex = 0;
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length;
+
+    if (totalSlides === 0) return;
 
     function showSlide(index) {
-        const slides = document.querySelector(".slides");
-        const totalSlides = document.querySelectorAll(".slide").length;
-
-        if (index >= totalSlides) {
-            currentSlide = 0;
-        } else if (index < 0) {
-            currentSlide = totalSlides - 1;
-        } else {
-            currentSlide = index;
-        }
-
-        slides.style.transform = `translateX(${-currentSlide * 100}%)`;
+        slides.forEach((slide, i) => {
+            slide.style.display = i === index ? 'block' : 'none';
+        });
     }
 
     function nextSlide() {
-        showSlide(currentSlide + 1);
+        currentIndex = (currentIndex + 1) % totalSlides;
+        showSlide(currentIndex);
     }
 
     function prevSlide() {
-        showSlide(currentSlide - 1);
+        currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+        showSlide(currentIndex);
     }
 
-    // Auto Slide
-    setInterval(nextSlide, 10000); // Change slide every 10 seconds
+    // ပထမ slide ကို ပြမယ်
+    showSlide(currentIndex);
 
-    // Expose functions globally if needed
+    // Auto-slide အတွက် setInterval ထည့်မယ်
+    const autoSlideInterval = setInterval(nextSlide, 15000); // ၅ စက္ကန့်ခြား ရွှေ့မယ်
+
+    // Global ထဲကို function တွေ ထည့်မယ်၊ HTML onclick က ခေါ်လို့ရအောင်
     window.nextSlide = nextSlide;
     window.prevSlide = prevSlide;
-})();
 
-// 5. Swipe Functionality for Slider
-(function sliderSwipe() {
-    let startX = 0;
-    let endX = 0;
+    // Optional: Mouse hover လုပ်ရင် auto-slide ရပ်ချင်ရင်
+    const slider = document.querySelector('.slider');
+    slider.addEventListener('mouseenter', () => clearInterval(autoSlideInterval));
+    slider.addEventListener('mouseleave', () => {
+        // Mouse ထွက်သွားရင် auto-slide ပြန်စမယ်
+        window.autoSlideInterval = setInterval(nextSlide, 5000);
+    });
+}
 
-    const slider = document.querySelector(".slider");
-
-    if (slider) {
-        slider.addEventListener("touchstart", (e) => {
-            startX = e.touches[0].clientX;
-        });
-
-        slider.addEventListener("touchmove", (e) => {
-            endX = e.touches[0].clientX;
-            e.preventDefault(); // Prevent scrolling issues on swipe
-        });
-
-        slider.addEventListener("touchend", () => {
-            if (startX - endX > 50) {
-                nextSlide(); // Swipe left
-            } else if (endX - startX > 50) {
-                prevSlide(); // Swipe right
-            }
-        });
-    }
-})();
+// စာမျက်နှာ load ဖြစ်တဲ့အခါ run မယ်
+document.addEventListener('DOMContentLoaded', loadVideoSlider);

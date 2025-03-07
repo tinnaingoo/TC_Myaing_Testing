@@ -1,16 +1,3 @@
-/* ===== 1. General Styles ===== */
-body {
-    margin: 0;
-    padding: 0;
-    line-height: 1.6;
-    color: #333; /* Changed from #f9f9f9 to #333 for better readability */
-    font-family: "Padauk", "Noto Sans Myanmar", serif;
-    scroll-behavior: smooth; /* Moved from html */
-}
-
-h1, h2, h3 {
-    font-family: "Noto Sans Myanmar", "Padauk", serif;
-}
 
 /* Font Classes */
 .noto-sans-myanmar-thin { font-family: "Noto Sans Myanmar", serif; font-weight: 100; font-style: normal; }
@@ -24,6 +11,132 @@ h1, h2, h3 {
 .noto-sans-myanmar-black { font-family: "Noto Sans Myanmar", serif; font-weight: 900; font-style: normal; }
 .padauk-regular { font-family: "Padauk", serif; font-weight: 400; font-style: normal; }
 .padauk-bold { font-family: "Padauk", serif; font-weight: 700; font-style: normal; }
+
+/* ===== 1. General Styles ===== */
+body {
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+    color: #333;
+    font-family: "Padauk", serif;
+    scroll-behavior: smooth;
+    background: #F8F8F8;
+    background-position: 0 0, 0 0;
+}
+h1, h2, h3 {
+    font-family: "Noto Sans Myanmar", serif;
+}
+
+/* Main Body Layout */
+/* Main Body Layout */
+.main-body {
+    display: flex;
+    justify-content: space-between;
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-top: 80px; /* Header ရဲ့ fixed position ကြောင့် margin-top */
+}
+
+.all-post {
+    flex: 0 0 75%; /* Desktop မှာ 75% */
+    padding: 10px 0;
+    background: #fff;
+    text-align: center;
+}
+
+.aside {
+    flex: 0 0 25%;
+    padding: 10px 0;
+    text-align: center;
+    background: #fff;
+    margin-left: 5px;
+    background: #fff;
+}
+
+/* Widget Socials Styles (Already in your CSS, keeping it consistent) */
+.widget-socials {
+    background: #fff;
+    padding: 10px;
+    border-radius: 8px;
+    width: 100%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.widget-title {
+    font-size: 1.5rem;
+    color: #0073e6;
+    margin-bottom: 15px;
+    font-family: "Noto Sans Myanmar", serif;
+}
+
+.socials {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.socials li {
+    margin-bottom: 10px;
+}
+
+.socials a {
+    display: flex;
+    align-items: center;
+    background: #0073e6;
+    color: #fff;
+    padding: 10px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.socials li a:hover {
+    opacity: 0.8;
+    transform: translateY(-2px);
+}
+
+ .socials .social-facebook {
+    background-color: #3b5998;
+}
+
+.socials .social-youtube {
+    background-color: #ff0000;
+}
+
+.socials i {
+    font-size: 1.2rem;
+    margin-right: 10px;
+}
+
+.socials__text {
+    font-size: 1rem;
+    font-weight: bold;
+    font-family: "Padauk", serif;
+}
+
+/* Responsive Design for Mobile */
+@media (max-width: 768px) {
+    .main-body {
+        flex-direction: column; /* Mobile မှာ column ဖြစ်အောင် */
+        width: 100%;
+    }
+
+    .all-post, .aside {
+        flex: 0 0 100%; /* Mobile မှာ 100% full width */
+        margin-left: 0px;
+    }
+
+    .widget-socials {
+        margin-top: 10px; /* Mobile မှာ သုံးရလွယ်ပါ */
+    }
+
+    .socials a {
+        padding: 8px 12px; /* Mobile မှာ သုံးရလွယ်ပါ */
+    }
+}
+
+
 
 /* Container */
 .container {
@@ -42,13 +155,12 @@ header {
     top: 0;
     left: 0;
     width: 100%;
-    background: #111184;
+    background: linear-gradient(135deg, #111184, #004d99);
     color: #fff;
     padding: 10px 0;
     z-index: 1000;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
-
 .header-box {
     display: flex;
     justify-content: space-between;
@@ -263,12 +375,9 @@ nav ul li a:hover {
 }
 
 
-section.all-post {
-    margin-top: 40px;
-}
 
 .all-post {
-    padding: 50px 0;
+    padding: 10px 0;
     background: #fff;
     text-align: center;
 }
@@ -278,7 +387,7 @@ section.all-post {
     justify-content: space-between;
     flex-wrap: wrap;
     gap: 20px;
-    margin: 50px 0;
+    margin: 10px 0;
     max-width: 1200px;
 }
 
@@ -391,8 +500,7 @@ section.all-post {
 .post-meta {
     font-size: 14px;
     color: #777;
-    margin-bottom: 20px;
-}
+    }
 
 .back-button {
     margin-top: 20px;
@@ -415,6 +523,12 @@ section.all-post {
 }
 
 @media (max-width: 768px) {
+    .post-meta {
+    font-size: 14px;
+    color: #777;
+    margin-bottom: 0px;
+    }
+    
     .post-content h2 {
         font-size: 1.5rem;
     }
@@ -644,6 +758,31 @@ section.all-post {
 }
 
 /* ===== 14. Filter Styles ===== */
+.category-tag {
+    background-color: #e0f7fa; /* Light cyan background */
+    padding: 2px 6px; /* အတွင်းအကွာအဝေး */
+    border-radius: 4px; /* ထောင့်များကို ချောမွေ့စေရန် */
+    margin-right: 5px; /* Category တွေကြားမှာ အကွာအဝေး */
+    font-size: 1em; /* စာလုံးအရွယ်အစား အနည်းငယ်သေးစေရန် */
+    color: #007bff; /* စာသားအရောင် */
+    cursor: pointer; /* နှိပ်လို့ရမှန်း သိအောင် လက်ပုံစံ */
+}
+
+.category-tag:hover {
+    background-color: #b3e5fc; /* Hover တဲ့အခါ အနည်းငယ်မှောင်တဲ့အရောင် */
+}
+
+.category-tag.highlighted {
+    background-color: #0288d1; /* Highlight အတွက် ပိုမှောင်တဲ့အရောင် */
+    color: white; /* စာသားအရောင် အဖြူရောင် */
+    font-weight: bold; /* စာလုံးကို ပိုထင်းအောင် */
+}
+
+.post-category {
+    margin-bottom: 10px; /* Category နဲ့ အောက်က အကြောင်းအရာကြား အကွာအဝေး */
+}
+
+
 .filter {
     position: fixed;
     right: 0;
@@ -848,7 +987,53 @@ section.all-post {
         justify-content: center;
     }
 }
+/* ===== Back to top ==== */
+/* Back to Top Button Styles */
+.back-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #0073e6;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    display: none; /* Default hidden */
+    z-index: 1000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
 
+.back-to-top:hover {
+    background: #005bb5;
+    transform: scale(1.1);
+}
+
+.back-to-top i {
+    font-size: 18px;
+}
+
+/* Show button when scrolled down */
+.back-to-top.show {
+    display: block;
+}
+
+/* Responsive Design for Mobile */
+@media (max-width: 768px) {
+    .back-to-top {
+        bottom: 10px;
+        right: 10px;
+        width: 35px;
+        height: 35px;
+    }
+
+    .back-to-top i {
+        font-size: 16px;
+    }
+}
+    
 /* ===== 10. Footer ===== */
 footer {
     background: #111184;
@@ -861,4 +1046,3 @@ footer {
 footer p {
     margin: 0;
 }
-

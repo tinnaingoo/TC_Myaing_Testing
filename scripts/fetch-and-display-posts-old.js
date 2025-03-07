@@ -1,5 +1,3 @@
-let currentFilter = null;
-
 async function fetchAndDisplayPosts() {
     const loadingIndicator = document.getElementById('loadingIndicator');
     const postGrid = document.getElementById('post-content-grid');
@@ -19,10 +17,9 @@ async function fetchAndDisplayPosts() {
 
         let postHTML = '';
         posts.forEach(post => {
-            const categories = post.Category.join(' '); // Space-separated string for data-category
-            const categoryDisplay = post.Category
-                .map(cat => `<span class="category-tag" data-category="${cat}">${cat}</span>`)
-                .join(', '); // Comma-separated with span tags
+            // Category array ကို string အဖြစ် ပြောင်းပြီး data-category ထဲ ထည့်မယ်
+            const categories = post.Category.join(' '); // ဥပမာ: "Technology Sharing Computer"
+            const categoryDisplay = post.Category.join(', '); // ဥပမာ: "Technology Sharing, Computer"
 
             postHTML += `
                 <div class="post-card" data-category="${categories}">
@@ -35,7 +32,7 @@ async function fetchAndDisplayPosts() {
                         <p class="post-excerpt">${post.Description}</p>
                         <div class="post-footer">
                             <a href="${post.PostUrl}.html" class="read-more">KEEP READING...</a>
-                            <span class="post-meta">By <a href="#">${post.Author}</a> • ${post.Date}</span>
+                            <span class="post-meta">By <a>${post.Author}</a> • ${post.Date}</span>
                         </div>
                     </div>
                 </div>`;
@@ -43,19 +40,6 @@ async function fetchAndDisplayPosts() {
 
         postGrid.innerHTML = postHTML;
         loadingIndicator.style.display = 'none';
-
-        document.querySelectorAll('.category-tag').forEach(tag => {
-            tag.addEventListener('click', function () {
-                const selectedCategory = this.getAttribute('data-category');
-                if (currentFilter === selectedCategory) {
-                    filterPostsByCategory('all');
-                    currentFilter = null;
-                } else {
-                    filterPostsByCategory(selectedCategory);
-                    currentFilter = selectedCategory;
-                }
-            });
-        });
     } catch (error) {
         console.error('Error fetching or displaying posts:', error.message);
         loadingIndicator.style.display = 'none';
